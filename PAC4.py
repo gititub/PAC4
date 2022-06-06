@@ -81,8 +81,29 @@ find_max_col(df3, 'age', llista_columnes)
 
 llista_columnes =['short_name' , 'year', 'overall']
 find_max_col(df3, 'short name', llista_columnes)
-llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']
 
+def find_rows_query(df: pd.DataFrame, query: tuple, cols_to_return: list) -> pd.DataFrame:
+    """La funció rep un dataframe i una query en forma de tupla. El primer element de la 
+    tupla serà una llista de columnes sobre les que volem filtrar. El segon element serà 
+    la llista de valors que volem fer servir al filtre. Si la columna és categòrica, el 
+    valor serà un string. Si és numèrica, serà una tupla amb el valor mínim i màxim"""
+    if type(query[1][0]) == tuple and type(query[1][1]) == tuple:
+        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])& (df[query[0][0]] <= query[1][0][1])&
+                                      (df[query[0][1]] >= query[1][1][0])& (df[query[0][1]] <= query[1][1][1])]
+    elif type(query[1][0]) == tuple and type(query[1][1]) == str:
+        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])& (df[query[0][0]] <= query[1][0][1])&
+                                      (df[query[0][1]] == query[1][1])]      
+    elif type(query[1][0]) == str and type(query[1][1]) == tuple:
+        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])& (df[query[0][1]] >= query[1][1][0])&
+                                     (df[query[0][1]] <= query[1][1][1])]
+    else:
+        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])& (df[query[0][1]] == query[1][1])]
+    return df_query
+
+llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender']    
+find_rows_query(df3, (['league_name', 'gender'], ['English Premier League', 'Male']), llista_columnes)
+
+llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']
 find_rows_query(df3, (['overall', 'age'], [(72,90), (18,25)]), llista_columnes)
 
 llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']

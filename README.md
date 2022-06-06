@@ -65,3 +65,9 @@ c) Presentació dels resultats: inclou un petit informe que explica quins criter
 cadascun dels aspectes del problema i que presenta els resultats obtinguts per a les
 millors línies defensives masculina, femenina i de jugadors veterans. Inclou alguns gràfics que acompanyen l'explicació.
 
+Pasos per executar el codi:
+1. git clone 
+2. unzip PAC4-main.zip
+3. cd ./PAC4-main
+4. pip install -r requirements.txt
+5. python3 ./PAC4.py

@@ -69,5 +69,5 @@ Pasos per executar el codi:
 1. git clone 
 2. unzip PAC4-main.zip
 3. cd ./PAC4-main
-4. pip install -r requirements.txt
+4. pip install -r requeriments.txt
 5. python3 ./PAC4.py

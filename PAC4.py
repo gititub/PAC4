@@ -248,7 +248,7 @@ clean_up_players_dict(d, col_query)
 # i els ids = [226328, 192476, 230566]
 years = [16,17,18]
 ids = [226328, 192476, 230566]
-df9 = join_datasets_year('/home/datasci/prog_datasci_2/activities/activity_4/data/', years)
+df9 = join_datasets_year('data/', years)
 cols = ["short_name", "overall", "potential", "player_positions", "year"]
 d9 = players_dict(df9, ids, cols)
 # La query que passaríeu a la funció de l'apartat 4b per netejar aquest diccionari:

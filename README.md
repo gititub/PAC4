@@ -86,7 +86,7 @@ pd.DataFrame
 - gender: gènere que volem estudiar
 - year: any que volem estudiar en format XXXX (per exemple 2020)
 - cols_to_return: llista de columnes que cal retornar (sense columna BMI)
-- 
+
 a) Mostreu una gràfica amb el BMI màxim per país. Filtreu per gènere masculí i any 2022. La
 informació sobre el país on juga cada futbolista (no confondre amb la nacionalitat del
 jugador) es pot extreure de la columna club_flag_url. 
@@ -94,9 +94,13 @@ jugador) es pot extreure de la columna club_flag_url.
 Considerant la següent classificació:
 Category BMI
 underweight < 18.5
+
 normal weight [18.5, 25)
+
 overweight [25, 30)
+
 obese ≥ 30
+
 Trobeu sorprenents els valors obtinguts? Per què?
 
 En les persones que practiquen esport o exercici físic de forma regular amb un IMC en grau d'obesitat, sobretot si no és una modalitat purament tècnica, no els haurem de catalogar com a tals sense estimar abans per mesures complementàries el greix corporal. L'antropometria és una tècnica fàcil i poc costosa que ens permet el mesurament de plecs cutanis i estimar-ne els components gras i magre. En les persones amb sobrepès s'ha de complementar l'estudi mitjançant la valoració del perímetre abdominal en relació amb la talla, i és aconsellable considerar-los des dels punts de tall més específics segons la població de procedència. En esportistes fins a un IMC de 32,8 kg/m2 no es pot considerar sobrepès degut al seu component predominantment magre o lliure de greix.

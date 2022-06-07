@@ -252,3 +252,18 @@ d9 = players_dict(df9, ids, cols)
 col_query = [("short_name","del_rep"), ('potential','one')]
 
 clean_up_players_dict(d9, col_query)
+
+# Considerant el dataframe amb ambdós gèneres i els anys 2016, 2017 i 2018,
+# mostreu per pantalla:
+# El diccionari construït amb la funció de l'apartat 4a amb la informació de
+# les columnes ["short_name", "overall", “potential”, "player_positions", "year"]
+# i els ids = [226328, 192476, 230566].
+years = [2016,2017,2018]
+ids = [226328, 192476, 230566]
+df9 = join_datasets_year('/home/datasci/prog_datasci_2/activities/activity_4/data/', years)
+cols = ["short_name", "overall", "potential", "player_positions", "year"]
+d9 = players_dict(df9, ids, cols)
+# La query que passaríeu a la funció de l'apartat 4b per netejar aquest diccionari:
+col_query = [("short_name","del_rep"), ('potential','one')]
+# El diccionari “net”;
+clean_up_players_dict(d9, col_query)

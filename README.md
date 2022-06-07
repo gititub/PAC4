@@ -103,11 +103,12 @@ obese ≥ 30
 
 Trobeu sorprenents els valors obtinguts? Per què?
 
-En les persones que practiquen esport o exercici físic de forma regular amb un IMC en grau d'obesitat, sobretot si no és una modalitat purament tècnica, no els haurem de catalogar com a tals sense estimar abans per mesures complementàries el greix corporal. L'antropometria és una tècnica fàcil i poc costosa que ens permet el mesurament de plecs cutanis i estimar-ne els components gras i magre. En les persones amb sobrepès s'ha de complementar l'estudi mitjançant la valoració del perímetre abdominal en relació amb la talla, i és aconsellable considerar-los des dels punts de tall més específics segons la població de procedència. En esportistes fins a un IMC de 32,8 kg/m2 no es pot considerar sobrepès degut al seu component predominantment magre o lliure de greix.
+**En les persones que practiquen esport o exercici físic de forma regular amb un IMC en grau d'obesitat, sobretot si no és una modalitat purament tècnica, no els haurem de catalogar com a tals sense estimar abans per mesures complementàries el greix corporal. L'antropometria és una tècnica fàcil i poc costosa que ens permet el mesurament de plecs cutanis i estimar-ne els components gras i magre. En les persones amb sobrepès s'ha de complementar l'estudi mitjançant la valoració del perímetre abdominal en relació amb la talla, i és aconsellable considerar-los des dels punts de tall més específics segons la població de procedència. En esportistes fins a un IMC de 32,8 kg/m2 no es pot considerar sobrepès degut al seu component predominantment magre o lliure de greix.**
 
 b) Compareu en una gràfica el BMI del conjunt de futbolistes que desitgeu amb el de la
 població espanyola. Podeu descarregar les dades de la pàgina de l'INE:
 https://www.ine.es/jaxiPx/Tabla.htm?path=/t15/p420/a2019/p03/l0/&file=01001.px&L=1
+
 
 ## Exercici 4: diccionaris
 
@@ -155,20 +156,16 @@ indiquen l'operació a realitzar sobre la columna/clau del diccionari:
 repeticions
 - La informació referent a les columnes que no apareixen a col_query es retornarà
 sense canvis.
-Per exemple si tinguéssim la query
-[("player_positions","del_rep"), ("short_name","one")]
-y l’entrada de diccionari
-41: {'short_name': ['Iniesta', 'Iniesta', 'Iniesta'], 'overall': [88, 88, 87], 'potential': [88, 88, 87],
-'player_positions': ['CM', 'CM', 'CM, LM'], 'year': [2016, 2017, 2018]}
-La nostra funció hauria de retornar:
-41: {'short_name': 'Iniesta', 'overall': [88, 88, 87], 'potential': [88, 88, 87], 'player_positions':
-{'CM', 'LM'}, 'year': [2016, 2017, 2018]}
+
 c) Considerant el dataframe amb ambdós gèneres i els anys 2016, 2017 i 2018, mostreu per
 pantalla:
+
 ● El diccionari construït amb la funció de l'apartat 4a amb la informació de les
 columnes ["short_name", "overall", “potential”, "player_positions", "year"] i els ids =
 [226328, 192476, 230566].
+
 ● La query que passaríeu a la funció de l'apartat 4b per netejar aquest diccionari.
+
 ● El diccionari “net”.
 
 
@@ -182,20 +179,20 @@ top_average_column(data: dict, identifier: str, col: str, threshold: int) -> lis
 - identifier: columna/clau que es fara servir com identificador
 - col: nom d’una columna/clau numérica
 - threshold: mínim número de dades necessàries
+- 
 Aquesta funció cal que:
+
 ● Per a cada sofifa_id, calculi el valor mitjà de la característica col si teniu informació
 de threshold o més anys. Si no, s'ignora aquest sofifa_id. Si algun element de la
 llista té el valor NaN, també s'ignora aquest sofifa_id.
+
 ● Retorni una llista de tuples formades per tres elements: valor de la columna
 identifier; mitjana de la característica; i un diccionari compost per la clau year que
 contingui la llista d'anys corresponents als valors i la clau value amb aquests
 valors.
+
 ● Ordeni la llista de tuples a retornar en ordre descendent segons la mitjana
 calculada.
-Per exemple, si tinguéssim identifier = “short_name” i col = “shooting”, un possible
-element de la llista seria
-('L. Schelin', 85.0, {'value': [87.0, 84.0, 84.0], 'year': [2016, 2017, 2018]})
-
 
 b) Feu servir la funció anterior per obtenir l'evolució dels 4 futbolistes amb millor mitjana de
 movement_sprint_speed entre el 2016 i el 2022 (inclosos). Utilitzeu “short_name” com a

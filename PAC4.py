@@ -74,7 +74,7 @@ def find_max_col(df: pd.DataFrame, filter_col: str, cols_to_return: list) -> pd.
         print("No és una columna numèrica")
     
 years = list(range(2016,2023))
-df3 = join_datasets_year('/home/datasci/prog_datasci_2/activities/activity_4/data/', years)
+df3 = join_datasets_year('data/', years)
 
 llista_columnes =['long_name' , 'player_positions', 'age']
 find_max_col(df3, 'age', llista_columnes)

@@ -1,0 +1,10 @@
+Sex;Age;Adult body mass index;Total
+Women;From 18 to 24 years old;Underweight (BMI < 18.5 kg/m2);131.4
+Women;From 18 to 24 years old;Normal weight (18.5 kg/m2 <= BMI < 25 kg/m2);1,029.9
+Women;From 18 to 24 years old;Overweight (25 kg/m2 <= BMI < 30 kg/m2);251.3
+Women;From 25 to 34 years old;Underweight (BMI < 18.5 kg/m2);163.1
+Women;From 25 to 34 years old;Normal weight (18.5 kg/m2 <= BMI < 25 kg/m2);1,615.8
+Women;From 25 to 34 years old;Overweight (25 kg/m2 <= BMI < 30 kg/m2);506.9
+Women;From 35 to 44 years old;Underweight (BMI < 18.5 kg/m2);117.6
+Women;From 35 to 44 years old;Normal weight (18.5 kg/m2 <= BMI < 25 kg/m2);2,037.9
+Women;From 35 to 44 years old;Overweight (25 kg/m2 <= BMI < 30 kg/m2);907.3

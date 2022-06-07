@@ -7,7 +7,7 @@ import sys
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-
+import statistics
 
 def read_add_year_gender(filepath: str, gender: str, year: int) -> pd.DataFrame:
     """Function with 3 inputs: filepath(+/or\), gender ['M' for Male
@@ -151,20 +151,14 @@ llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
 calculate_BMI(df3, 'Male', 2016, llista_col)
 
 #  gràfica amb el BMI màxim per país. Filtreu per gènere masculí i any 2022. 
-df4 = calculate_BMI(df3, 'Male', 2022, ['club_flag_url'])
-df4['pais'] = df4['club_flag_url'].str.extract('flags/(\w+).png')
-df4
 
-#  gràfica amb el BMI màxim per país. Filtreu per gènere masculí i any 2022. 
+# df4['pais'] = df4['club_flag_url'].str.extract('flags/(\w+).png')
+
 df4 = calculate_BMI(df3, 'Male', 2022, ['club_flag_url'])
 df4['pais'] = df4['club_flag_url'].str.extract('flags/([a-zA-Z]+(?:-[a-zA-Z]+)*).png')
 df4
-
-
-import matplotlib.pyplot as plt
-
+# gràfica
 df5 = df4.groupby('pais').BMI.agg(['max'])
-
 ax = df5.plot(kind='bar', figsize=(16, 6), title='BMI max', rot=40)
 plt.show()
 
@@ -178,15 +172,20 @@ data.loc[(data['BMI']>=18.5) & (data['BMI']<25), 'Adult body mass index']="Norma
 data.loc[(data['BMI']>=25) & (data['BMI']<30), 'Adult body mass index']="Overweight (25 kg/m2 <= BMI < 30 kg/m2)"
 data
 
+# Plot dades dataset
 data3 = data[['BMI','Age','Adult body mass index']].groupby(['Age','Adult body mass index']).mean().unstack()
-
-data2 = pd.read_csv('ine.csv', sep=';')
-#data2['Total'] = pd.to_numeric(data2['Total']).astype(float)
-#data22 = data2[['Age','Adult body mass index','Total']].groupby(['Age','Adult body mass index']).mean().unstack()
-data2
-
 ax = data3.plot(kind='bar', figsize=(16, 6), title='BMI', rot=40)
 plt.show()
+
+#Plot dades ine
+data2 = pd.read_csv('ine.csv', sep=';')
+data2['Total'] = data2['Total'].str.replace(",", "").astype(float)
+data22 = data2[['Age','Adult body mass index','Total']].groupby(['Age','Adult body mass index']).mean().unstack()
+ax = data22.plot(kind='bar', figsize=(16, 6), title='BMI', rot=40)
+plt.show()
+
+# Diccionaris
+
 
 def players_dict(df: pd.DataFrame, ids: list, cols:list) -> dict:
     """Inputs:
@@ -229,36 +228,25 @@ def clean_up_players_dict(player_dict: dict, col_query: list) -> dict:
         res[ident] = params
     return res
 
+# Prova 1
 col_query = [("player_positions","del_rep"), ("short_name","one")]
-
 d= {41: {'short_name': ['Iniesta', 'Iniesta', 'Iniesta'], 'overall': [88, 88, 87], 'potential': [88, 88, 87],
 'player_positions': ['CM', 'CM', 'CM, LM'], 'year': [2016, 2017, 2018]}}
-
 clean_up_players_dict(d, col_query)
 
+# Prova2
 ids = [261799,158023,20801,41]
 cols = ['short_name',"player_positions", 'year', 'age', 'overall', 'potential']
 d = players_dict(df3, ids, cols)
 col_query = [("short_name","del_rep"), ('potential','one')]
-
 clean_up_players_dict(d, col_query)
-
-years = [16,17,18]
-ids = [226328, 192476, 230566]
-df9 = join_datasets_year('/home/datasci/prog_datasci_2/activities/activity_4/data/', years)
-cols = ["short_name", "overall", "potential", "player_positions", "year"]
-d9 = players_dict(df9, ids, cols)
-
-col_query = [("short_name","del_rep"), ('potential','one')]
-
-clean_up_players_dict(d9, col_query)
 
 # Considerant el dataframe amb ambdós gèneres i els anys 2016, 2017 i 2018,
 # mostreu per pantalla:
 # El diccionari construït amb la funció de l'apartat 4a amb la informació de
 # les columnes ["short_name", "overall", “potential”, "player_positions", "year"]
-# i els ids = [226328, 192476, 230566].
-years = [2016,2017,2018]
+# i els ids = [226328, 192476, 230566]
+years = [16,17,18]
 ids = [226328, 192476, 230566]
 df9 = join_datasets_year('/home/datasci/prog_datasci_2/activities/activity_4/data/', years)
 cols = ["short_name", "overall", "potential", "player_positions", "year"]

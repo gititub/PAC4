@@ -180,7 +180,7 @@ data
 
 data3 = data[['BMI','Age','Adult body mass index']].groupby(['Age','Adult body mass index']).mean().unstack()
 
-data2 = pd.read_csv('data/ine.csv', sep=';')
+data2 = pd.read_csv('ine.csv', sep=';')
 #data2['Total'] = pd.to_numeric(data2['Total']).astype(float)
 #data22 = data2[['Age','Adult body mass index','Total']].groupby(['Age','Adult body mass index']).mean().unstack()
 data2

@@ -120,16 +120,20 @@ mostrar:
 
 a) Creeu una funció que, donat un dataframe amb les dades, una llista d'identificadors i una
 llista de columnes:
+
 players_dict(df: pd.DataFrame, ids: list, cols:list) -> dict
+
 - df: dataframe que conté les dades
 - ids: llista d’iidentificador “sofifa_id”
 - cols: llista de columnes de les que volem informació
 retorni un diccionari:
+
 - que tingui com a claus els identificadors “sofifa_id” continguts a la llista “ids”
 - que tingui com a valors diccionaris amb la informació corresponent a cada
 jugador/a. Concretament, les claus de cadascun d'aquests diccionaris seran els
 noms de les columnes incloses a “col” i els seus valors seran la informació de tots
 els anys disponibles al dataframe per a cada futbolista.
+
 Nota 1: Cal fer servir la columna “sofifa_id exclusivament com a clau. No s'inclourà a la
 llista “cols” en cap cas.
 
@@ -151,6 +155,7 @@ llista de tuples col_query.
 Cada tupla de la llista estarà composta per dos valors: 1) el nom duna columna i 2) una
 cadena de caràcters. Aquesta cadena pot contenir dos valors possibles, els quals ens
 indiquen l'operació a realitzar sobre la columna/clau del diccionari:
+
 - “one”: ens hem de quedar només amb el primer valor que aparegui
 - “del_rep”: primer hem de descompondre la informació i després eliminar les
 repeticions

@@ -79,10 +79,7 @@ un any,retorni un dataframe que inclogui una columna amb l'índex de massa corpo
 cada futbolista d'aquest gènere i any. La funció també rebrà com a argument una llista de
 columnes. El dataframe que retorni la funció han de contenir aquestes columnes, a més de la
 nova columna BMI.
-El BMI d'una persona es calcula de la següent manera:
-𝐵𝑀𝐼 = 𝑝𝑒𝑠
-𝑎𝑙ç𝑎𝑑𝑎 * 𝑎𝑙ç𝑎𝑑𝑎
-Nota: Cal expressar el pes en quilograms i l’alçada en metros.
+
 calculate_BMI(df: pd.DataFrame, gender: str, year: int, cols_to_return: list) ->
 pd.DataFrame
 - df: dataframe que conté les dades

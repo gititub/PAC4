@@ -4,6 +4,8 @@ El focus de dades d'aquest projecte es descarrega "FIFA 22 Complete Player Datas
 **PAC4.py inclou el codi de les funcions aquí descrites, a excepció de l'exercici 6, on només trobarem l'anàlisi de la millor defensa de veterans.
 A Exercici6_homes_dones.py trobareu el codi corresponent a l'anàlisi de la millor defensa masculina i femenina a partir de les dades del 2022.**
 
+**Podeu trobar tot el material a https://github.com/gititub/PAC4**
+
 ## Exercici 1: lectura i pre-procés
 El primer que cal fer es crear funcions que llegeixin i processin les nostre dades.
 

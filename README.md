@@ -1,6 +1,8 @@
 
 El focus de dades d'aquest projecte es descarrega "FIFA 22 Complete Player Dataset" disponible a Kaggle. El conjunt de dades que farem servir correspòn a les de FIFA 2022 masculí i femení des del 2016 fins al 2022.
 
+
+
 ## Exercici 1: lectura i pre-procés
 El primer que cal fer es crear funcions que llegeixin i processin les nostre dades.
 
@@ -265,7 +267,6 @@ són més importants. Obtinguda la llista de candidats per a cada posició, el s
 possibles línies defensives que s'hi puguin constituir. Després, caldrà fer una estimació de
 la contribució a l'atac, la possessió i la defensa de cada línia en base al nostre criteri propi.
 Així, ordenarem les línies de millor a pitjor i ens quedarem amb la millor.
-
 
 b) Implementació: inclou el codi necessari per trobar la solució al problema implementant els criteris subjectius que hem definit. 
 

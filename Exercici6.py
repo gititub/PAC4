@@ -12,8 +12,6 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-get_ipython().run_line_magic('matplotlib', 'inline')
-
 
 df = pd.read_csv('data/players_22.csv', low_memory = False)
 

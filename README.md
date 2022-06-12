@@ -184,7 +184,7 @@ top_average_column(data: dict, identifier: str, col: str, threshold: int) -> lis
 - identifier: columna/clau que es fara servir com identificador
 - col: nom d’una columna/clau numérica
 - threshold: mínim número de dades necessàries
-- 
+
 Aquesta funció cal que:
 
 ● Per a cada sofifa_id, calculi el valor mitjà de la característica col si teniu informació
@@ -273,7 +273,7 @@ c) Presentació dels resultats: inclou un petit informe que explica quins criter
 cadascun dels aspectes del problema i que presenta els resultats obtinguts per a les
 millors línies defensives masculina, femenina i de jugadors veterans. Inclou alguns gràfics que acompanyen l'explicació.
 
-Pasos per executar el codi:
+## Pasos per executar el codi:
 1. git clone 
 2. unzip PAC4-main.zip
 3. cd ./PAC4-main

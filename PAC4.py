@@ -5,9 +5,14 @@
 import pandas as pd
 import sys
 import os
-import matplotlib.pyplot as plt
 import numpy as np
 import statistics
+import seaborn as sns
+sns.set_palette("cool")
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+import warnings
+warnings.filterwarnings('ignore')
 
 def read_add_year_gender(filepath: str, gender: str, year: int) -> pd.DataFrame:
     """Function with 3 inputs: filepath(+/or\), gender ['M' for Male
@@ -253,3 +258,82 @@ d9 = players_dict(df9, ids, cols)
 col_query = [("short_name","del_rep"), ('potential','one')]
 # El diccionari “net”;
 clean_up_players_dict(d9, col_query)
+
+# La millor defensa. 
+# Millor linia defensiva dels jugadors de 30 anys o més (masculí i femení)
+
+data6 = join_male_female('data/', 2022)
+players = data6[data6['age']>29]
+players['player_positions'].str.split().apply(lambda x: x[0]).unique()
+
+#weights
+a = 0.5
+b = 1
+c= 2
+d = 3
+
+players['best_center_backs'] = (d*players.defending + c*players.mentality_interceptions +
+                           d*players.defending_sliding_tackle + d*players.defending_standing_tackle +
+                           b*players.mentality_vision + b*players.mentality_composure +
+                           b*players.skill_curve + a*players.skill_ball_control+
+                           b*players.skill_long_passing + c*players.movement_acceleration +
+                           b*players.movement_sprint_speed + d*players.power_stamina +
+                           d*players.power_jumping + b*players.power_long_shots +
+                           d*players.defending_marking_awareness +
+                           c*players.mentality_aggression)/(a + 6*b + 3*c + 6*d)
+
+players['best_wb'] = (d*players.defending + b*players.skill_ball_control + a*players.dribbling +
+                 a*players.defending_marking_awareness + d*players.defending_standing_tackle +
+                 d*players.defending_sliding_tackle + a*players.mentality_positioning +
+                 c*players.attacking_crossing + b*players.attacking_short_passing +
+                 c*players.skill_long_passing + d*players.movement_reactions + d*players.movement_agility +
+                 c*players.power_stamina + a*players.attacking_finishing)/(4*a + 2*b + 3*c + 5*d)
+
+# Best Right Wing Back Talents (RB, RWB)
+
+wing_back_right = players[players.player_positions.str.contains('\\b(?:RB)|(?:RWB)\\b', regex=True)]
+
+# Best Left Wing Back Talents (LB, LWB)
+
+wing_back_left = players[players.player_positions.str.contains('\\b(?:LB)|(?:LWB)\\b', regex=True)]
+
+# Best Centre Back Talents (CB)
+
+center_back = players[players.player_positions.str.contains('CB')]
+
+#DEFENSOR LATERAL DRET:
+plt.figure(figsize= (15,6))
+sd = wing_back_right.sort_values('best_wb',ascending=False)[:10]
+x2 = np.array(list(sd['short_name']))
+y2 = np.array(list(sd['best_wb']))
+sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
+plt.ylabel("RB Score")
+
+#DEFENSOR LATERAL ESQUERRA:
+plt.figure(figsize= (15,6))
+sd = center_back.sort_values('best_wb',ascending=False)[:10]
+x2 = np.array(list(sd['short_name']))
+y2 = np.array(list(sd['best_wb']))
+sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
+plt.ylabel("LB Score")
+
+#DEFENSOR CENTRAL:
+plt.figure(figsize= (15,6))
+sd = wing_back_left.sort_values('best_center_backs',ascending=False)[:10]
+x2 = np.array(list(sd['short_name']))
+y2 = np.array(list(sd['best_center_backs']))
+sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
+plt.ylabel("LB Score")
+
+
+
+#Referències:
+
+#https://www.geeksforgeeks.org/how-to-combine-two-dataframe-in-python-pandas/
+#https://www.geeksforgeeks.org/read-multiple-csv-files-into-separate-dataframes-in-python/
+#https://stackoverflow.com/questions/70177540/how-to-groupby-aggregate-min-max-and-plot-grouped-bars
+#https://stackoverflow.com/questions/66978572/extract-part-of-url-from-column-of-urls-in-python
+#https://es.stackoverflow.com/questions/155042/expresi%C3%B3n-regular-con-gui%C3%B3n-medio-en-una-clase-de-caracteres
+#https://stackoverflow.com/questions/47837594/melting-a-pandas-dataframe-into-dictionary-with-unique-keys-based-on-a-column
+#https://www.geeksforgeeks.org/python-converting-all-strings-in-list-to-integers/
+#https://www.edureka.co/blog/football-world-cup-best-xi-analysis-using-python/

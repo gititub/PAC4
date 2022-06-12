@@ -272,7 +272,6 @@ Així, ordenarem les línies de millor a pitjor i ens quedarem amb la millor.
 b) Implementació: inclou el codi necessari per trobar la solució al problema implementant els criteris subjectius que hem definit:
 
 - PAC4.py : veterans
--
 - Exercici6_homes_dones.py: homes i dones, respectivament
 
 

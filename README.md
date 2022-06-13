@@ -273,7 +273,7 @@ Així, ordenarem les línies de millor a pitjor i ens quedarem amb la millor.
 b) Implementació: inclou el codi necessari per trobar la solució al problema implementant els criteris subjectius que hem definit.
 
 
-c) Presentació dels resultats: inclou un **Informe.md** que explica quins criteris hem utilitzat per modelar
+c) Presentació dels resultats: inclou un **Informe** que explica quins criteris hem utilitzat per modelar
 cadascun dels aspectes del problema i que presenta els resultats obtinguts per a les
 millors línies defensives masculina, femenina i de jugadors veterans. Inclou alguns gràfics que acompanyen l'explicació.
 
@@ -282,5 +282,5 @@ millors línies defensives masculina, femenina i de jugadors veterans. Inclou al
 2. unzip PAC4-main.zip
 3. cd ./PAC4-main
 4. pip install -r requeriments.txt
-5. python3 ./PAC4.py
-6. python3 ./Exercici6_homes_dones.py
+5. python3 ./ProgramDatasciPAC4.py
+

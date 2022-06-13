@@ -266,210 +266,109 @@ col_query = [("short_name","del_rep"), ('potential','one')]
 clean_up_players_dict(d9, col_query)
 
 # LA MILLOR DEFENSA
+
+
+def best_defense(df: pd.DataFrame, position):
+    """Funció que té com a input un dataframe de FIFA i retorna
+    un rànquing segons millors capacitats defensa-control pilota-
+    atac i un gràfic de barres amb els millors candidats en la
+    posició indicada a position: R (dreta), L(esquerra),
+    C(central)"""
+    df['player_positions'].str.split().apply(lambda x: x[0]).unique()
+    #weights
+    a = 0.5
+    b = 1
+    c = 2
+    d = 3
+
+    df['best_center_backs'] = (d*df.defending + c*df.mentality_interceptions +
+                               d*df.defending_sliding_tackle + d*df.defending_standing_tackle +
+                               b*df.mentality_vision + b*df.mentality_composure +
+                               b*df.skill_curve + a*df.skill_ball_control+
+                               b*df.skill_long_passing + c*df.movement_acceleration +
+                               b*df.movement_sprint_speed + d*df.power_stamina +
+                               d*df.power_jumping + b*df.power_long_shots +
+                               d*df.defending_marking_awareness +
+                               c*df.mentality_aggression)/(a + 6*b + 3*c + 6*d)
+
+    df['best_wb'] = (d*df.defending + b*df.skill_ball_control + a*df.dribbling +
+                     a*df.defending_marking_awareness + d*df.defending_standing_tackle +
+                     d*df.defending_sliding_tackle + a*df.mentality_positioning +
+                     c*df.attacking_crossing + b*df.attacking_short_passing +
+                     c*df.skill_long_passing + d*df.movement_reactions + d*df.movement_agility +
+                     c*df.power_stamina + a*df.attacking_finishing)/(4*a + 2*b + 3*c + 5*d)
+
+    # Best Right Wing Back Talents (RB, RWB)
+    wing_back_right = df[df.player_positions.str.contains('\\b(?:RB)|(?:RWB)\\b', regex=True)]
+
+    # Best Left Wing Back Talents (LB, LWB)
+    wing_back_left = df[df.player_positions.str.contains('\\b(?:LB)|(?:LWB)\\b', regex=True)]
+
+    # Best Centre Back Talents (CB)
+    center_back = df[df.player_positions.str.contains('CB')]
+
+    if position == "R":
+        #DEFENSOR LATERAL DRET:
+        plt.figure(figsize=(15, 6))
+        sd_right = wing_back_right.sort_values('best_wb', ascending=False)[:10]
+        x_value = np.array(list(sd_right['short_name']))
+        y_value = np.array(list(sd_right['best_wb']))
+        sns.barplot(x_value, y_value, palette=sns.color_palette("Blues_d"))
+        plt.ylabel("RB Score")
+        sd_right = sd_right.sort_values(['defending', 'skill_ball_control',
+                                         'attacking_crossing'],
+                                        ascending=(False, False, False)).head(10)
+        return sd_right
+    if position == "L":
+        #DEFENSOR LATERAL ESQUERRA:
+        plt.figure(figsize=(15, 6))
+        sd_left = wing_back_left.sort_values('best_wb', ascending=False)[:10]
+        x2_value = np.array(list(sd_left['short_name']))
+        y2_value = np.array(list(sd_left['best_wb']))
+        sns.barplot(x2_value, y2_value, palette=sns.color_palette("Blues_d"))
+        plt.ylabel("LB Score")
+
+        sd_left = sd_left.sort_values(['defending', 'skill_ball_control',
+                                       'attacking_crossing'],
+                                      ascending=(False, False, False)).head(10)
+        return sd_left
+    if position == "C":
+        #DEFENSOR CENTRAL:
+        plt.figure(figsize=(15, 6))
+        sd3_central = center_back.sort_values('best_center_backs', ascending=False)[:10]
+        x3_value = np.array(list(sd3_central['short_name']))
+        y3_value = np.array(list(sd3_central['best_center_backs']))
+        sns.barplot(x3_value, y3_value, palette=sns.color_palette("Blues_d"))
+        plt.ylabel("LB Score")
+
+        sd3_central = sd3_central.sort_values(['defending', 'skill_ball_control',
+                                               'attacking_crossing'],
+                                              ascending=(False, False, False)).head(10)
+        return sd3_central
+
+
 # Millor linia defensiva dels jugadors de 30 anys o més (masculí i femení)
 
-data6 = join_male_female('data/', 2022)
-players = data6[data6['age']>29]
-players['player_positions'].str.split().apply(lambda x: x[0]).unique()
+any22 = join_male_female('data/', 2022)
+veter = any22[any22['age'] > 29]
 
-#weights
-a = 0.5
-b = 1
-c= 2
-d = 3
+best_defense(veter, 'C')
+best_defense(veter, 'R')
+best_defense(veter, 'L')
 
-players['best_center_backs'] = (d*players.defending + c*players.mentality_interceptions +
-                           d*players.defending_sliding_tackle + d*players.defending_standing_tackle +
-                           b*players.mentality_vision + b*players.mentality_composure +
-                           b*players.skill_curve + a*players.skill_ball_control+
-                           b*players.skill_long_passing + c*players.movement_acceleration +
-                           b*players.movement_sprint_speed + d*players.power_stamina +
-                           d*players.power_jumping + b*players.power_long_shots +
-                           d*players.defending_marking_awareness +
-                           c*players.mentality_aggression)/(a + 6*b + 3*c + 6*d)
+# Millor defensa equip masculí 2022
 
-players['best_wb'] = (d*players.defending + b*players.skill_ball_control + a*players.dribbling +
-                 a*players.defending_marking_awareness + d*players.defending_standing_tackle +
-                 d*players.defending_sliding_tackle + a*players.mentality_positioning +
-                 c*players.attacking_crossing + b*players.attacking_short_passing +
-                 c*players.skill_long_passing + d*players.movement_reactions + d*players.movement_agility +
-                 c*players.power_stamina + a*players.attacking_finishing)/(4*a + 2*b + 3*c + 5*d)
+homes = pd.read_csv('data/players_22.csv', low_memory=False)
+best_defense(homes, 'C')
+best_defense(homes, 'R')
+best_defense(homes, 'L')
 
-# Best Right Wing Back Talents (RB, RWB)
+#  Millor defensa equip femení 2022
 
-wing_back_right = players[players.player_positions.str.contains('\\b(?:RB)|(?:RWB)\\b', regex=True)]
-
-# Best Left Wing Back Talents (LB, LWB)
-
-wing_back_left = players[players.player_positions.str.contains('\\b(?:LB)|(?:LWB)\\b', regex=True)]
-
-# Best Centre Back Talents (CB)
-
-center_back = players[players.player_positions.str.contains('CB')]
-
-#DEFENSOR LATERAL DRET:
-plt.figure(figsize= (15,6))
-sd = wing_back_right.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("RB Score")
-
-#DEFENSOR LATERAL ESQUERRA:
-plt.figure(figsize= (15,6))
-sd = wing_back_left.sort_values('best_center_backs',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_center_backs']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("LB Score")
-
-#DEFENSOR CENTRAL:
-plt.figure(figsize= (15,6))
-sd = center_back.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("CB Score")
-
-# MILLOR DEFENSA EQUIP MASCULÍ
-
-df = pd.read_csv('data/players_22.csv', low_memory = False)
-
-for col_name in df.columns: 
-    print(col_name)
-
-df['player_positions'].str.split().apply(lambda x: x[0]).unique()
-
-#Establim els pesos de cada característica
-#weights
-a = 0.5
-b = 1
-c= 2
-d = 3
-
-df['best_center_backs'] = (d*df.defending + c*df.mentality_interceptions +
-                           d*df.defending_sliding_tackle + d*df.defending_standing_tackle +
-                           b*df.mentality_vision + b*df.mentality_composure +
-                           b*df.skill_curve + a*df.skill_ball_control+
-                           b*df.skill_long_passing + c*df.movement_acceleration +
-                           b*df.movement_sprint_speed + d*df.power_stamina +
-                           d*df.power_jumping + b*df.power_long_shots +
-                           d*df.defending_marking_awareness +
-                           c*df.mentality_aggression)/(a + 6*b + 3*c + 6*d)
-
-df['best_wb'] = (d*df.defending + b*df.skill_ball_control + a*df.dribbling +
-                 a*df.defending_marking_awareness + d*df.defending_standing_tackle +
-                 d*df.defending_sliding_tackle + a*df.mentality_positioning +
-                 c*df.attacking_crossing + b*df.attacking_short_passing +
-                 c*df.skill_long_passing + d*df.movement_reactions + d*df.movement_agility +
-                 c*df.power_stamina + a*df.attacking_finishing)/(4*a + 2*b + 3*c + 5*d)
-
-# Best Right Wing Back Talents (RB, RWB)
-
-wing_back_right = df[df.player_positions.str.contains('\\b(?:RB)|(?:RWB)\\b', regex=True)]
-
-# Best Left Wing Back Talents (LB, LWB)
-
-wing_back_left = df[df.player_positions.str.contains('\\b(?:LB)|(?:LWB)\\b', regex=True)]
-
-# Best Centre Back Talents (CB)
-
-center_back = df[df.player_positions.str.contains('CB')]
-
-#DEFENSOR LATERAL DRET:
-plt.figure(figsize= (15,6))
-sd = wing_back_right.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("RB Score")
-
-
-#DEFENSOR LATERAL ESQUERRA:
-plt.figure(figsize= (15,6))
-sd = wing_back_left.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("LB Score")
-
-#DEFENSOR CENTRAL:
-plt.figure(figsize= (15,6))
-sd = center_back.sort_values('best_center_backs',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_center_backs']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("LB Score")
-
-
-# MILLOR DEFENSA EQUIP FEMENÍ
-df = pd.read_csv('data/female_players_22.csv', low_memory = False)
-
-#weights
-a = 0.5
-b = 1
-c= 2
-d = 3
-
-df['best_center_backs'] = (d*df.defending + c*df.mentality_interceptions +
-                           d*df.defending_sliding_tackle + d*df.defending_standing_tackle +
-                           b*df.mentality_vision + b*df.mentality_composure +
-                           b*df.skill_curve + a*df.skill_ball_control+
-                           b*df.skill_long_passing + c*df.movement_acceleration +
-                           b*df.movement_sprint_speed + d*df.power_stamina +
-                           d*df.power_jumping + b*df.power_long_shots +
-                           d*df.defending_marking_awareness +
-                           c*df.mentality_aggression)/(a + 6*b + 3*c + 6*d)
-
-df['best_wb'] = (d*df.defending + b*df.skill_ball_control + a*df.dribbling +
-                 a*df.defending_marking_awareness + d*df.defending_standing_tackle +
-                 d*df.defending_sliding_tackle + a*df.mentality_positioning +
-                 c*df.attacking_crossing + b*df.attacking_short_passing +
-                 c*df.skill_long_passing + d*df.movement_reactions + d*df.movement_agility +
-                 c*df.power_stamina + a*df.attacking_finishing)/(4*a + 2*b + 3*c + 5*d)
-
-# Best Right Wing Back Talents (RB, RWB)
-
-wing_back_right = df[df.player_positions.str.contains('\\b(?:RB)|(?:RWB)\\b', regex=True)]
-
-# Best Left Wing Back Talents (LB, LWB)
-
-wing_back_left = df[df.player_positions.str.contains('\\b(?:LB)|(?:LWB)\\b', regex=True)]
-
-# Best Centre Back Talents (CB)
-
-center_back = df[df.player_positions.str.contains('CB')]
-
-
-#DEFENSORA LATERAL DRETA:
-plt.figure(figsize= (15,6))
-sd = wing_back_right.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("RB Score")
-
-
-sd = sd.sort_values(['overall','potential'],ascending=(False,False)).head(10)
-sd
-
-
-#DEFENSORA LATERAL ESQUERRA:
-plt.figure(figsize= (15,6))
-sd = wing_back_left.sort_values('best_wb',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_wb']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("LB Score")
-
-
-#DEFENSORA CENTRAL:
-plt.figure(figsize= (15,6))
-sd = center_back.sort_values('best_center_backs',ascending=False)[:10]
-x2 = np.array(list(sd['short_name']))
-y2 = np.array(list(sd['best_center_backs']))
-sns.barplot(x2, y2, palette=sns.color_palette("Blues_d"))
-plt.ylabel("LB Score")
+dones = pd.read_csv('data/female_players_22.csv', low_memory=False)
+best_defense(dones, 'C')
+best_defense(dones, 'R')
+best_defense(dones, 'L')
 
 
 #Referències:

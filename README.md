@@ -1,8 +1,7 @@
 
 El focus de dades d'aquest projecte es descarrega "FIFA 22 Complete Player Dataset" disponible a Kaggle. El conjunt de dades que farem servir correspòn a les de FIFA 2022 masculí i femení des del 2016 fins al 2022.
 
-**PAC4.py inclou el codi de les funcions aquí descrites, a excepció de l'exercici 6, on només trobarem l'anàlisi de la millor defensa de veterans.
-A Exercici6_homes_dones.py trobareu el codi corresponent a l'anàlisi de la millor defensa masculina i femenina a partir de les dades del 2022.**
+**PAC4.py inclou el codi de les funcions aquí descrites**
 
 **Podeu trobar tot el material a https://github.com/gititub/PAC4**
 
@@ -271,10 +270,7 @@ possibles línies defensives que s'hi puguin constituir. Després, caldrà fer u
 la contribució a l'atac, la possessió i la defensa de cada línia en base al nostre criteri propi.
 Així, ordenarem les línies de millor a pitjor i ens quedarem amb la millor.
 
-b) Implementació: inclou el codi necessari per trobar la solució al problema implementant els criteris subjectius que hem definit:
-
-- PAC4.py : veterans
-- Exercici6_homes_dones.py: homes i dones, respectivament
+b) Implementació: inclou el codi necessari per trobar la solució al problema implementant els criteris subjectius que hem definit.
 
 
 c) Presentació dels resultats: inclou un **Informe.md** que explica quins criteris hem utilitzat per modelar

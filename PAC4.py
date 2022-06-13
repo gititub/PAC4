@@ -15,43 +15,42 @@ import warnings
 warnings.filterwarnings('ignore')
 
 def read_add_year_gender(filepath: str, gender: str, year: int) -> pd.DataFrame:
-    """Function with 3 inputs: filepath(+/or\), gender ['M' for Male
+    """Function with 3 inputs: filepath, gender ['M' for Male
     or 'F' for Female], and year [from 2016 to 2022] of the data.
     Reads the file in filepath and returns a pandas dataframe with
     two new columns:
-    - gender: 'Male' or 'Female' 
+    - gender: 'Male' or 'Female'
     - year of the data"""
     year_n = [int(a) for a in str(year)]
     if gender == 'M':
         df = pd.read_csv(filepath + "players_" + str(year_n[2]) + str(year_n[3]) +
-                         ".csv", low_memory = False)
+                         ".csv", low_memory=False)
         n = len(df.index)
         df['gender'] = ['Male']*n
         df['year'] = year
         return df
-        
     elif gender == 'F':
-        df = pd.read_csv(filepath + "female_players_" + str(year_n[2]) + str(year_n[3]) + ".csv", low_memory = False)
+        df = pd.read_csv(filepath + "female_players_" + str(year_n[2]) + str(year_n[3]) +
+                         ".csv", low_memory=False)
         n = len(df.index)
         df['gender'] = ['Female']*n
         df['year'] = year
         return df
-      
+
 def join_male_female(filepath: str, year: int) -> pd.DataFrame:
     """Function with 2 inputs: filepath  and year [from 2016 to 2022]
     of the data.
     Reads the file in filepath and returns a pandas dataframe with
     two new columns:
-    - gender: 'Male' or 'Female' 
+    - gender: 'Male' or 'Female'
     - year of the data"""
     df1 = read_add_year_gender(filepath, 'M', year)
     df2 = read_add_year_gender(filepath, 'F', year)
     joined_result = df1.append(df2)
     return joined_result
   
-  
 def join_datasets_year(path: str, years: list) -> pd.DataFrame:
-    """Function with 2 inputs: filepath(+/or\)and a list
+    """Function with 2 inputs: filepath and a list
     of years[from 2016 to 2022] of the data.
     Reads the file in filepath and returns a pandas dataframe 
     with joined gender of input years data with two new columns:
@@ -77,13 +76,13 @@ def find_max_col(df: pd.DataFrame, filter_col: str, cols_to_return: list) -> pd.
     except:
         print("No és una columna numèrica")
     
-years = list(range(2016,2023))
+years = list(range(2016, 2023))
 df3 = join_datasets_year('data/', years)
 
-llista_columnes =['long_name' , 'player_positions', 'age']
+llista_columnes = ['long_name' ,'player_positions', 'age']
 find_max_col(df3, 'age', llista_columnes)
 
-llista_columnes =['short_name' , 'year', 'overall']
+llista_columnes = ['short_name' ,'year', 'overall']
 find_max_col(df3, 'short name', llista_columnes)
 
 def find_rows_query(df: pd.DataFrame, query: tuple, cols_to_return: list) -> pd.DataFrame:
@@ -92,29 +91,34 @@ def find_rows_query(df: pd.DataFrame, query: tuple, cols_to_return: list) -> pd.
     la llista de valors que volem fer servir al filtre. Si la columna és categòrica, el 
     valor serà un string. Si és numèrica, serà una tupla amb el valor mínim i màxim"""
     if type(query[1][0]) == tuple and type(query[1][1]) == tuple:
-        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])& (df[query[0][0]] <= query[1][0][1])&
-                                      (df[query[0][1]] >= query[1][1][0])& (df[query[0][1]] <= query[1][1][1])]
+        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])&
+                                      (df[query[0][0]] <= query[1][0][1])&
+                                      (df[query[0][1]] >= query[1][1][0])&
+                                      (df[query[0][1]] <= query[1][1][1])]
     elif type(query[1][0]) == tuple and type(query[1][1]) == str:
-        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])& (df[query[0][0]] <= query[1][0][1])&
+        df_query = df[cols_to_return][(df[query[0][0]] >= query[1][0][0])&
+                                      (df[query[0][0]] <= query[1][0][1])&
                                       (df[query[0][1]] == query[1][1])]      
     elif type(query[1][0]) == str and type(query[1][1]) == tuple:
-        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])& (df[query[0][1]] >= query[1][1][0])&
-                                     (df[query[0][1]] <= query[1][1][1])]
+        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])&
+                                      (df[query[0][1]] >= query[1][1][0])&
+                                      (df[query[0][1]] <= query[1][1][1])]
     else:
-        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])& (df[query[0][1]] == query[1][1])]
+        df_query = df[cols_to_return][(df[query[0][0]] == query[1][0])&
+                                      (df[query[0][1]] == query[1][1])]
     return df_query
 
-llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender']    
+llista_columnes = ['short_name' , 'year', 'overall', 'league_name', 'gender']    
 find_rows_query(df3, (['league_name', 'gender'], ['English Premier League', 'Male']), llista_columnes)
 
-llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']
-find_rows_query(df3, (['overall', 'age'], [(72,90), (18,25)]), llista_columnes)
+llista_columnes = ['short_name' , 'year', 'overall', 'league_name', 'gender','age']
+find_rows_query(df3, (['overall', 'age'], [(72, 90), (18, 25)]), llista_columnes)
 
-llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']
-find_rows_query(df3, (['league_name', 'age'], ['English Premier League', (18,25)]), llista_columnes)
+llista_columnes = ['short_name' , 'year', 'overall','league_name', 'gender','age']
+find_rows_query(df3, (['league_name', 'age'], ['English Premier League', (18, 25)]), llista_columnes)
 
-llista_columnes =['short_name' , 'year', 'overall','league_name', 'gender','age']
-find_rows_query(df3, (['age','league_name'], [(18,25),'English Premier League']), llista_columnes)
+llista_columnes =['short_name' , 'year', 'overall', 'league_name', 'gender','age']
+find_rows_query(df3, (['age', 'league_name'], [(18, 25), 'English Premier League']), llista_columnes)
 
 # des de l'any 2016 fins al 2022, ambdós inclosos, mostreu per pantalla el “short_name”, “year”,
 # “age”, “overall” i “potential” dels jugadors de nacionalitat belga menors de 25 anys màxim
@@ -122,12 +126,13 @@ find_rows_query(df3, (['age','league_name'], [(18,25),'English Premier League'])
 
 llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
 
-belg_fins24= df3[llista_col][(df3['age'] < 25)&(df3['nationality_name']=='Belgium')&
-                             (df3['gender']=='Male')]
+belg_fins24= df3[llista_col][(df3['age'] < 25) & (df3['nationality_name'] == 'Belgium')&
+                             (df3['gender'] == 'Male')]
 belg_fins24[belg_fins24['potential'] == belg_fins24['potential'].max()]
 
-# des de l'any 2016 fins al 2022, ambdós inclosos, mostreu per pantalla el “short_name”, “year”,
-# “age”, “overall” i “potential” de les porteres majors de 28 anys amb “overall” superior a 85 al futbol femení.
+# des de l'any 2016 fins al 2022, ambdós inclosos, mostreu per pantalla el “short_name”,
+# “year”, “age”, “overall” i “potential” de les porteres majors de 28 anys amb “overall”
+# superior a 85 al futbol femení.
 
 llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
 
@@ -148,7 +153,7 @@ def calculate_BMI(df: pd.DataFrame, gender: str, year: int, cols_to_return: list
     weight = df['weight_kg'].astype(float)
     df['BMI'] = round(weight/(height*height), 3)
     cols_to_return.append('BMI')
-    df_bmi = df[cols_to_return][(df['year']==year)&(df['gender']==gender)]
+    df_bmi = df[cols_to_return][(df['year'] == year) & (df['gender'] == gender)]
     return df_bmi
 
 llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
@@ -168,23 +173,23 @@ plt.show()
 
 llista_col = ['age']
 data = calculate_BMI(df3, 'Female', 2020, llista_col) 
-data.loc[(data['age']<25), "Age"]="From 18 to 24 years old" 
-data.loc[(data['age']>24) & (data['age']<35), "Age"]="From 25 to 34 years old"
-data.loc[(data['age']>34), "Age"]="From 35 to 44 years old"
-data.loc[(data['BMI']< 18.5), 'Adult body mass index']="Underweight (BMI < 18.5 kg/m2)" 
-data.loc[(data['BMI']>=18.5) & (data['BMI']<25), 'Adult body mass index']="Normal weight (18.5 kg/m2 <= BMI < 25 kg/m2)"
-data.loc[(data['BMI']>=25) & (data['BMI']<30), 'Adult body mass index']="Overweight (25 kg/m2 <= BMI < 30 kg/m2)"
+data.loc[(data['age'] < 25), "Age"] = "From 18 to 24 years old" 
+data.loc[(data['age'] > 24) & (data['age'] < 35), "Age"] = "From 25 to 34 years old"
+data.loc[(data['age'] > 34), "Age"] = "From 35 to 44 years old"
+data.loc[(data['BMI'] < 18.5), 'Adult body mass index'] = "Underweight (BMI < 18.5 kg/m2)" 
+data.loc[(data['BMI'] >= 18.5) & (data['BMI'] < 25), 'Adult body mass index']="Normal weight (18.5 kg/m2 <= BMI < 25 kg/m2)"
+data.loc[(data['BMI'] >= 25) & (data['BMI'] < 30), 'Adult body mass index']="Overweight (25 kg/m2 <= BMI < 30 kg/m2)"
 data
 
 # Plot dades dataset
-data3 = data[['BMI','Age','Adult body mass index']].groupby(['Age','Adult body mass index']).mean().unstack()
+data3 = data[['BMI', 'Age', 'Adult body mass index']].groupby(['Age', 'Adult body mass index']).mean().unstack()
 ax = data3.plot(kind='bar', figsize=(16, 6), title='BMI', rot=40)
 plt.show()
 
 #Plot dades ine
 data2 = pd.read_csv('ine.csv', sep=';')
 data2['Total'] = data2['Total'].str.replace(",", "").astype(float)
-data22 = data2[['Age','Adult body mass index','Total']].groupby(['Age','Adult body mass index']).mean().unstack()
+data22 = data2[['Age', 'Adult body mass index', 'Total']].groupby(['Age','Adult body mass index']).mean().unstack()
 ax = data22.plot(kind='bar', figsize=(16, 6), title='BMI', rot=40)
 plt.show()
 
@@ -210,7 +215,7 @@ def players_dict(df: pd.DataFrame, ids: list, cols:list) -> dict:
     result= dict((k, df_dict[k]) for k in ids if k in df_dict)
     return result
     
-ids = [261799,158023,20801]
+ids = [261799, 158023, 20801]
 cols = ['short_name', 'year', 'age', 'overall', 'potential']
 players_dict(df3, ids, cols)
 
@@ -239,7 +244,7 @@ d= {41: {'short_name': ['Iniesta', 'Iniesta', 'Iniesta'], 'overall': [88, 88, 87
 clean_up_players_dict(d, col_query)
 
 # Prova2
-ids = [261799,158023,20801,41]
+ids = [261799 ,158023, 20801, 41]
 cols = ['short_name',"player_positions", 'year', 'age', 'overall', 'potential']
 d = players_dict(df3, ids, cols)
 col_query = [("short_name","del_rep"), ('potential','one')]
@@ -250,7 +255,7 @@ clean_up_players_dict(d, col_query)
 # El diccionari construït amb la funció de l'apartat 4a amb la informació de
 # les columnes ["short_name", "overall", “potential”, "player_positions", "year"]
 # i els ids = [226328, 192476, 230566]
-years = [16,17,18]
+years = [2016, 2017, 2018]
 ids = [226328, 192476, 230566]
 df9 = join_datasets_year('data/', years)
 cols = ["short_name", "overall", "potential", "player_positions", "year"]
@@ -260,7 +265,7 @@ col_query = [("short_name","del_rep"), ('potential','one')]
 # El diccionari “net”;
 clean_up_players_dict(d9, col_query)
 
-# La millor defensa. 
+# LA MILLOR DEFENSA
 # Millor linia defensiva dels jugadors de 30 anys o més (masculí i femení)
 
 data6 = join_male_female('data/', 2022)

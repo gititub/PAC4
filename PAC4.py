@@ -23,7 +23,8 @@ def read_add_year_gender(filepath: str, gender: str, year: int) -> pd.DataFrame:
     - year of the data"""
     year_n = [int(a) for a in str(year)]
     if gender == 'M':
-        df = pd.read_csv(filepath + "players_" + str(year_n[2]) + str(year_n[3]) + ".csv", low_memory = False)
+        df = pd.read_csv(filepath + "players_" + str(year_n[2]) + str(year_n[3]) +
+                         ".csv", low_memory = False)
         n = len(df.index)
         df['gender'] = ['Male']*n
         df['year'] = year

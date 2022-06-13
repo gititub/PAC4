@@ -1,5 +1,6 @@
 """PAC4. PROGRAMACIÓ PER A LA CIÈNCIA DE DADES
     Author: Amèlia Martínez
+    Juny 2022
 """
 
 import pandas as pd
@@ -79,11 +80,11 @@ def find_max_col(df: pd.DataFrame, filter_col: str, cols_to_return: list) -> pd.
 years = list(range(2016, 2023))
 df3 = join_datasets_year('data/', years)
 
-llista_columnes = ['long_name' ,'player_positions', 'age']
-find_max_col(df3, 'age', llista_columnes)
+l1_columnes = ['long_name', 'player_positions', 'age']
+find_max_col(df3, 'age', l1_columnes)
 
-llista_columnes = ['short_name' ,'year', 'overall']
-find_max_col(df3, 'short name', llista_columnes)
+l2_columnes = ['short_name', 'year', 'overall']
+find_max_col(df3, 'short name', l2_columnes)
 
 def find_rows_query(df: pd.DataFrame, query: tuple, cols_to_return: list) -> pd.DataFrame:
     """La funció rep un dataframe i una query en forma de tupla. El primer element de la 
@@ -133,10 +134,9 @@ belg_fins24[belg_fins24['potential'] == belg_fins24['potential'].max()]
 # des de l'any 2016 fins al 2022, ambdós inclosos, mostreu per pantalla el “short_name”,
 # “year”, “age”, “overall” i “potential” de les porteres majors de 28 anys amb “overall”
 # superior a 85 al futbol femení.
-
 llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
 
-df3[llista_col][(df3['gender']=='Female')&(df3['age'] > 28)&(df3['overall'] > 85)]
+df3[llista_col][(df3['gender'] == 'Female')&(df3['age'] > 28)&(df3['overall'] > 85)]
 
 height = df3['height_cm'].astype(float)/100
 weight = df3['weight_kg'].astype(float)
@@ -144,7 +144,7 @@ df3['BMI'] = round(weight/(height*height), 3)
 llista_col = ['short_name', 'year', 'age', 'overall', 'potential']
 llista_col.append('BMI')
 
-df3[(df3['year']== 2016)&(df3['gender']=='Male')]
+df3[(df3['year'] == 2016)&(df3['gender'] == 'Male')]
 
 def calculate_BMI(df: pd.DataFrame, gender: str, year: int, cols_to_return: list) -> pd.DataFrame:
     """Function with inputs: dataframe, gender, year: format XXXX, cols_to_return.

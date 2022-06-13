@@ -1,2 +1,10 @@
 # pylint: skip-file
-# Poned aquí los imports de las funciones que hay que testear.
+from ProgramDatasciPAC4 import read_add_year_gender
+from ProgramDatasciPAC4 import join_datasets_year
+from ProgramDatasciPAC4 import join_male_female
+from ProgramDatasciPAC4 import find_max_col
+from ProgramDatasciPAC4 import find_rows_query
+from ProgramDatasciPAC4 import calculate_BMI
+from ProgramDatasciPAC4 import players_dict
+from ProgramDatasciPAC4 import clean_up_players_dict
+from ProgramDatasciPAC4 import top_average_column
